@@ -1,0 +1,46 @@
+import { StyleSheet } from "react-native";
+export const styles = StyleSheet.create({
+    header:{
+        width:'100%',
+        height:80,
+        backgroundColor:'white'
+    },
+    logo:{
+        width:40,
+        height:40,
+        marginTop:5,
+        marginLeft:20
+    },
+    projectname:{
+        color:'#5ba1f4',
+        marginTop:5,
+        marginLeft:10,
+        fontWeight:'bold',
+        fontSize:19
+    },
+    search:{
+        marginLeft:186
+    },
+    title:{
+        marginLeft:40,
+        marginTop:10,
+        width:310
+    },
+    name_1:{
+        color:'black',
+        fontSize:14,
+        fontWeight:'bold'
+    },
+    time:{
+        color:'black'
+    },
+    time1:{
+        color:'black',
+        marginLeft:40
+    },
+    Entypo:{
+        position:"absolute",
+        left:320,
+        top:6
+    }
+});
