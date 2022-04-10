@@ -46,6 +46,8 @@ const play = ({navigation}) => {
     const [endTime, setEndTime] = useState()
     const [curTime, setCurTime] = useState()
     const [index, setIndex] = useState(0)
+    const [isPlay, setIsPlay] = useState(true)
+
     const ref = React.useRef();
 
     
@@ -59,14 +61,22 @@ const play = ({navigation}) => {
     useEffect(() => {
         const interval = setInterval(async () => {
           const elapsed_sec = await ref.current.getCurrentTime(); // this is a promise. dont forget to await
-          //  console.log('elapsed_sec =>'+ elapsed_sec)
+           console.log('elapsed_sec =>', elapsed_sec)
           // calculations
           const elapsed_ms = Math.floor(elapsed_sec * 1000);
           const min = Math.floor(elapsed_ms / 60000);
           const seconds = Math.floor((elapsed_ms - min * 60000) / 1000);
-         console.log("current Time",seconds);  
-          setCurTime(seconds)
 
+         console.log("current min",min);  
+         console.log("current Time",seconds);  
+          setCurTime(min*60+seconds)
+        //   if (data[index]?.endTime>=(min*60+seconds)) {
+            //   ref.current.stop()
+        //     setIsPlay(false)
+        //   }
+        //   if (condition) {
+        //       ref.current.getCurrentTime()
+        //   }
         //   setElapsed(
         //     min.toString().padStart(2, '0') +
         //       ':' +
@@ -78,6 +88,7 @@ const play = ({navigation}) => {
 
         return () => {
           clearInterval(interval);
+          console.log();
         };
       }, [index]);
     return (
