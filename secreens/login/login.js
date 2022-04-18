@@ -9,18 +9,20 @@ import axios from 'axios';
 
 const login=({navigation})=>{
 
-const [name, setName] = useState();
-const [password, setPassword] = useState();
+const [name, setName] = useState('Mohsin');
+const [password, setPassword] = useState('1234');
 
 const [data,setData]=React.useState([]);
 const ref=React.useState();
+
+
 
 const lol=async()=>{
   try {   
     const res=await axios.get(`http://192.168.100.40/BlinkVideoApi/api/BlinkVideo/Login?name=${name}&password=${password}`);
     console.log('res',res?.data);
     setData(res?.data)
-    navigation.navigate('home')
+    navigation.navigate('view')
   } catch (error) {
     alert('Invalid credentials')
   }
@@ -40,21 +42,21 @@ OnSignIn =()=>{
 
 return(
 <View style={{flex:1,backgroundColor:'#ffffff'}}>
-<ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+<ScrollView contentContainerStyle={{ paddingBottom: 10 }}>
     <Image style={styles.appicon} source={require('../../src/assets/images/logo.png')}/>
     <Text style={styles.login}>Login</Text>
     <Text style={styles.continue}>Please login to continue.</Text>
 
         <View style={{...styles.email,flexDirection:'row',alignItems:"center"}}>
         <Fontisto name='email' size={20} color={'black'}  />
-        <TextInput style={styles.useremail} marginLeft={20} placeholderTextColor={"gray"} placeholder='User Name' 
+        <TextInput value={name} style={styles.useremail} marginLeft={20} placeholderTextColor={"gray"} placeholder='User Name' 
             onChangeText={name =>setName(name)}
         />
         </View>
 
         <View style={{...styles.password,flexDirection:'row',alignItems:'center'}}>
         <AntDesign name='lock1' size={20} color={'black'} />
-        <TextInput style={styles.useremail} marginLeft={20} placeholderTextColor={"gray"} placeholder='Password'
+        <TextInput value={password} style={styles.useremail} marginLeft={20} placeholderTextColor={"gray"} placeholder='Password'
             onChangeText={password =>setPassword(password)}
         />
         </View>

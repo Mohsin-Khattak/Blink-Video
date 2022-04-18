@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-async-storage/async-storage": "^1.16.1",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
@@ -20,13 +21,15 @@
     "react-native-actions-sheet": "^0.6.1",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1",
+    "react-native-thumbnail-video": "^0.1.2",
     "react-native-vector-icons": "^9.0.0",
     "react-native-video": "^5.2.0",
     "react-native-video-controls": "^2.8.1",
     "react-native-webview": "^11.18.1",
     "react-native-youtube": "^2.0.2",
     "react-native-youtube-iframe": "^2.2.2",
-    "react-navigation": "^4.4.4"
+    "react-navigation": "^4.4.4",
+    "rn-range-slider": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "7.16.7",

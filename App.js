@@ -11,8 +11,9 @@ import home from './secreens/home/home';
 import admin from './secreens/admin login/admin';
 import upload from './secreens/upload video/upload';
 import splash from './secreens/Splash/splash';
-import play from './secreens/play video/play';
-import Clip from './secreens/clip/clip';
+import Play from './secreens/play video/play';
+
+
 
 
  const Stack = createNativeStackNavigator();
@@ -32,8 +33,8 @@ import Clip from './secreens/clip/clip';
      <Stack.Screen name='view' component={view} />
      <Stack.Screen name='admin' component={admin}/>
      <Stack.Screen name='upload' component={upload}/>
-     <Stack.Screen name='play' component={play}/>
-     <Stack.Screen name='Clip' component={Clip}/>
+     <Stack.Screen name='play' component={Play}/>
+     
    </Stack.Navigator>
       
  </NavigationContainer>

@@ -18,7 +18,7 @@ const signup=({navigation})=>{
      const signup=async()=>{
          try {
              const res=await axios.post(`http://192.168.100.40/BlinkVideoApi/api/BlinkVideo/AddNew`,{
-                "U_Name":fullname,
+            "U_Name":fullname,
             "U_Password":password,
             "U_Role":"User"
             });

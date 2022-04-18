@@ -5,33 +5,13 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import axios from 'axios';
 import { styles } from './style';
-import { urls } from '../../src/api/api-urls';
-
-
-// const data=[
-//     {
-        
-//         name:'SiBw7os-_zI',
-//         name_1:'Intro to Object Oriented Programming ',
-//         time:'30:17'
-//     },
-//     {
-//         name:'JXVZYUfAipw',
-//         name_1:'Java Tutorial 6- OOPS | Class & Object | Methods ',
-//         time:'1:00:4'
-//     },
-//     {
-//         name:'sd-S0yu9qus',
-//         name_1:'Java Tutorials 03 : Objects , Classes , Methods',
-//         time:'1:00:03'
-//     }
-   
-// ]
+import { urls } from '../../src/api/api-urls'
 
 
 const view=({navigation})=>{
    const [data,setData]=React.useState([]);
    const ref=React.useRef();
+   
 
 React.useEffect(()=>{
   (async()=>{
@@ -53,15 +33,13 @@ return(
     <FlatList data={data}
     keyExtractor={(item,index)=>index.toString()}
     renderItem={({item,index})=>{
+        console.log('item',item);
         return(
            
                
             <View>
-                <TouchableOpacity  onPress={() => navigation.navigate('play')} style={styles.video}>
-                    <YoutubePlayer  ref={ref} videoId={item?.V_Url}
-                    height={236}
-                    play={false}     
-                    /> 
+                <TouchableOpacity  onPress={() => navigation.navigate('play',{item:item})} style={styles.video}>
+                <Image style={{height:200,width:'100%'}} source={{uri:`https://img.youtube.com/vi/${item.V_Url}/0.jpg`}}/>
                 </TouchableOpacity>
                 
                 <View style={styles.title}>

@@ -28,8 +28,6 @@ export const styles = StyleSheet.create({
     },
 
     useremail:{
-        
-       
         color: 'black'
     },
     password:{
