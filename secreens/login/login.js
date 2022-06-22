@@ -31,7 +31,7 @@ const LogIn = ({navigation}) => {
       console.log('res', res?.data);
       setData(res?.data);
       await saveData(res?.data);
-      navigation.navigate('Home');
+      navigation.navigate('tab');
     } catch (error) {
       alert('Invalid credentials');
     }

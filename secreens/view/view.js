@@ -159,7 +159,7 @@ const Viewvideo = ({navigation}) => {
             <View style={{width: 310, height: 35}}>
               <Text ellipsizeMode="tail" style={{...styles.name_1}}>
                 {item.V_Title}
-                {item.V_Keywords}
+                {item.V_Keywords.split(',').join(' | ')}
               </Text>
             </View>
             <Entypo

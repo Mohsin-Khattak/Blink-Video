@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, {useState} from 'react';
 import {
@@ -20,25 +21,29 @@ const SignUp = ({navigation}) => {
   // const [Conform_password, setConfrompassword] = useState();
 
   const [data, setData] = useState();
-
+  const saveData = async user_info => {
+    await AsyncStorage.setItem('user', JSON.stringify(user_info));
+  };
   const signup = async () => {
     try {
       const res = await axios.post(`${urls.base_url}BlinkVideo/AddNew`, {
         U_Name: fullname,
         U_Password: password,
         user_email: email,
+        U_Role: 'User',
       });
       console.log('res', res?.data);
       setData(res?.data);
-
+      await saveData(res?.data);
       alert('Signiup Sucessfully');
+      navigation.navigate('tab');
     } catch (error) {}
   };
 
   const OnSingnUp = () => {
     if (!fullname?.trim()) alert('please enter name');
     else if (!email?.trim()) alert('please enter email');
-    else if (password?.length < 4) alert('please enter password');
+    else if (password?.length < 3) alert('please enter password');
     else signup();
   };
 

@@ -10,15 +10,17 @@ import Search from '../secreens/search/search';
 const Tab = createBottomTabNavigator();
 function TabNavigation() {
   return (
-    <Tab.Navigator
-      // screenOptions={{tabBarShowLabel:false,headerShown:false}}
-      screenOptions={{headerShown: false}}>
+    <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false}}>
       <Tab.Screen
         name="Home"
         component={view}
         options={{
           tabBarIcon: (focused, color, size) => (
-            <AntDesign name="home" size={30} color="#5ba1f4" />
+            <AntDesign
+              name="home"
+              size={25}
+              color={focused ? 'black' : '#5ba1f4'}
+            />
           ),
         }}
       />
@@ -27,7 +29,11 @@ function TabNavigation() {
         component={upload}
         options={{
           tabBarIcon: (focused, color, size) => (
-            <AntDesign name="pluscircleo" size={30} color="#5ba1f4" />
+            <AntDesign
+              name="pluscircleo"
+              size={25}
+              color={focused ? 'black' : '#5ba1f4'}
+            />
           ),
         }}
       />
@@ -36,7 +42,11 @@ function TabNavigation() {
         component={splash}
         options={{
           tabBarIcon: (focused, color, size) => (
-            <AntDesign name="adduser" size={30} color="#5ba1f4" />
+            <AntDesign
+              name="adduser"
+              size={25}
+              color={focused ? 'black' : '#5ba1f4'}
+            />
           ),
         }}
       />

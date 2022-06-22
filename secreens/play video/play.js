@@ -149,7 +149,7 @@ const Play = ({navigation, route}) => {
           <View style={{height: 50, width: 250}}>
             <Text style={styles.clipkeyword}>
               {item.V_Title}
-              {item.V_Keywords}
+              {item.V_Keywords.split(',').join(' | ')}
               {item.Catgory}
             </Text>
           </View>
@@ -267,7 +267,8 @@ const Play = ({navigation, route}) => {
         <View style={styles.Description}>
           <View style={{width: 308, height: 57, marginLeft: 12}}>
             <Text style={styles.videotitle}>
-              {item.V_Title}|{item.V_Keywords}
+              {item.V_Title}
+              {item.V_Keywords.split(',').join(' | ')}
             </Text>
           </View>
           <View style={styles.iconsview}>
