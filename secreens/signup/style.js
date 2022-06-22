@@ -1,59 +1,58 @@
-import { StyleSheet} from "react-native";
+import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
-    appicon:{
-        width:100,
-        height:100,
-        alignSelf:'center',
-        marginTop:50
-    },
-    createaccount:{
-        color:'black',
-        fontWeight:'bold',
-        fontSize:40,
-        marginTop:20,
-        marginLeft:30
-    },
-    name:{
-        marginLeft:20,
-        marginTop:70,
-        borderBottomWidth: 2,
-        borderBottomColor: '#b2b3b3',
-        width: 350,
-    },
- 
-    email:{
-         marginTop:10,
-         marginLeft:20,
-         width:350,
-         borderBottomWidth:2,
-         borderBottomColor:'#b2b3b3',
-    },
-    useremail:{
-  
-        color:'black'
-    },
-    signupbtn:{
-        marginTop:30,
-        marginLeft:240,
-        width:120,
-        height:50,
-        borderRadius:70,
-        backgroundColor:'#5ba1f4'
-    },
-    signuptxt:{
-       color:'white',
-       fontWeight:'bold',
-       textAlign:'center',
-       marginLeft:24
-    },
-    alreadyacount:{
-        color:'gray',
-        textAlign:"center",
-        marginTop:70
-    },
-    arrow:{
-        position:'absolute',
-        top:20,
-        left:20
-    },
+  appicon: {
+    width: 100,
+    height: 100,
+    alignSelf: 'center',
+    marginTop: 50,
+  },
+  createaccount: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 40,
+    marginTop: 20,
+    marginLeft: 30,
+  },
+  name: {
+    marginLeft: 20,
+    marginTop: 70,
+    borderBottomWidth: 2,
+    borderBottomColor: '#b2b3b3',
+    width: 350,
+  },
+
+  email: {
+    marginTop: 10,
+    marginLeft: 20,
+    width: 350,
+    borderBottomWidth: 2,
+    borderBottomColor: '#b2b3b3',
+  },
+  useremail: {
+    color: 'black',
+  },
+  signupbtn: {
+    marginTop: 60,
+    marginLeft: 240,
+    width: 120,
+    height: 50,
+    borderRadius: 70,
+    backgroundColor: '#5ba1f4',
+  },
+  signuptxt: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginLeft: 24,
+  },
+  alreadyacount: {
+    color: 'gray',
+    textAlign: 'center',
+    marginTop: 70,
+  },
+  arrow: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+  },
 });

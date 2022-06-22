@@ -1,31 +1,46 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import home from '../secreens/home/home';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import add from '../secreens/add/add';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import view from '../secreens/view/view';
+import upload from '../secreens/upload video/upload';
+import splash from '../secreens/Splash/splash';
+import Search from '../secreens/search/search';
 
 const Tab = createBottomTabNavigator();
-function tab() {
+function TabNavigation() {
   return (
     <Tab.Navigator
-    
-    // screenOptions={{tabBarShowLabel:false,headerShown:false}}
-    screenOptions={{headerShown:false}}
-    >
-     <Tab.Screen name="home" component={home} options={{
-        tabBarIcon:(focused,color,size)=>(
-          <AntDesign name="home" size={30} color="#5ba1f4" />
-      )
-     }}/>
-     <Tab.Screen name='add' component={add} options={{
-       tabBarIcon:(focused,color,size)=>(
-          < Ionicons name='md-add-circle-outline' size={30} color="#5ba1f4"/>
-       )
-     }}
-      /> 
-     
+      // screenOptions={{tabBarShowLabel:false,headerShown:false}}
+      screenOptions={{headerShown: false}}>
+      <Tab.Screen
+        name="Home"
+        component={view}
+        options={{
+          tabBarIcon: (focused, color, size) => (
+            <AntDesign name="home" size={30} color="#5ba1f4" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="upload"
+        component={upload}
+        options={{
+          tabBarIcon: (focused, color, size) => (
+            <AntDesign name="pluscircleo" size={30} color="#5ba1f4" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="User"
+        component={splash}
+        options={{
+          tabBarIcon: (focused, color, size) => (
+            <AntDesign name="adduser" size={30} color="#5ba1f4" />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
-export default tab;
+export default TabNavigation;

@@ -9,5 +9,15 @@ select * from UserLogIn
 select * from Course
 select * from Video
 --create table UploadVideo (v_id int primary key identity,V_Title varchar(1000),V_Description varchar(1000),V_Keyword varchar(1000),V_Url varchar(3000))
+select * from Clip
+delete from UserLogIn 
+ select * from Comment
+ select * from Rankingx
+select * from Clip
+select * from AddUser
+select * from views where v_id=1 and user_id=1
 
-delete from UserLogIn where P_id >5
+select * from Video.Title
+
+select V_Url,V_Title from Video Inner join Comment  On Video.v_id=Comment.v_id
+select * from 

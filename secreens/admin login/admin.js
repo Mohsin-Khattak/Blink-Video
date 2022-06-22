@@ -3,7 +3,7 @@ import { styles} from './style';
 import {View,Text, TextInput,Image,TouchableOpacity,ScrollView} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-const admin=({navigation})=>{
+const Admin=({navigation})=>{
 return(
 <View style={{flex:1,backgroundColor:'#ffffff'}}>
 <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
@@ -38,4 +38,4 @@ return(
 </View>
  );
 };
-export default admin; 
+export default Admin; 

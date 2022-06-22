@@ -1,7 +1,7 @@
 import React from 'react';
 import {View,Text,Image,TouchableOpacity} from 'react-native';
 import { styles} from './style';
-const splash=({navigation})=>{
+const Splash=({navigation})=>{
 return(
 <View style={{flex:1,backgroundColor:'white'}}>
     <View style={styles.header}>
@@ -22,4 +22,4 @@ return(
 </View>
  );
 };
-export default splash;
+export default Splash;

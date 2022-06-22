@@ -1,71 +1,195 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
-    scissors:{
-    backgroundColor:'#FFFFFF',
-    width:'100%',
-    height:80,
-   
-},
-Entypo:{
-    marginTop:20,
-    marginLeft:350,
-   
-},
-txtscissors:{
-    color:'#0A0A0A',
-    marginLeft:350,
-},
-clips:{
-    marginRight:10
-},
+  Description: {
+    backgroundColor: '#FFFFFF',
+    // width: '100%',
+    // height: 140,
+  },
+  videotitle: {
+    marginTop: 16,
+    color: '#0A0A0A',
+    fontSize: 16,
+    fontWeight: '500',
+    lineHeight: 19,
+  },
+  txtlike: {
+    marginTop: 8,
+    fontSize: 12,
+    color: '#0A0A0A',
+  },
+  icon_style: {
+    width: '25%',
+    alignItems: 'center',
+  },
+  iconsview: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 22,
+    marginTop: 10,
+  },
+  name_1: {
+    color: 'black',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  time: {
+    color: 'black',
+  },
+  savebtn: {
+    width: 100,
+    height: 40,
+    backgroundColor: '#5ba1f4',
+    borderRadius: 75,
+    marginTop: 30,
+    marginLeft: 50,
+  },
+  savetxt: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    marginTop: 7,
+  },
+  clipview: {
+    width: '100%',
+    marginTop: 5,
+    height: 425,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+    backgroundColor: '#ECECEC',
+  },
+  createtxt: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 20,
+    marginTop: 20,
+  },
+  ClipTitleTxtInput: {
+    width: 305,
+    color: 'black',
+    borderBottomWidth: 2,
+    borderBottomColor: '#b2b3b3',
+  },
+  clipflatlist: {
+    height: 275,
+    marginTop: 10,
+    borderTopWidth: 0.5,
+    borderTopColor: '#CECECE',
+  },
+  rankingclip: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    marginRight: 10,
+    marginTop: 10,
+  },
+  comentmodal: {
+    backgroundColor: '#ECECEC',
+    width: '100%',
+    height: 424,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+  cmnttitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 25,
+    width: '100%',
+    height: 40,
+    marginTop: 20,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#CECECE',
+  },
+  userimage: {
+    width: 46,
+    height: 46,
+    borderRadius: 100,
+  },
+  searchinput: {
+    width: 320,
+    height: 50,
+  },
+  addcomment: {
+    flexDirection: 'row',
+    marginTop: 15,
+    width: '100%',
+    height: 50,
+    borderBottomWidth: 0.5,
+    justifyContent: 'space-between',
+    // paddingHorizontal: 19,
+    borderBottomColor: '#CECECE',
+    paddingHorizontal: 10,
+  },
+  flatlistcomment: {
+    width: '100%',
+    height: 90,
+    //   backgroundColor:'red',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#CECECE',
+  },
+  usercommentimage: {
+    width: 26,
+    height: 26,
+    borderRadius: 100,
+  },
+  Ionicons: {
+    marginTop: 10,
+  },
+  clipkeyword: {
+    color: 'black',
+    marginLeft: 10,
+    fontWeight: 'bold',
+    fontSize: 14,
+    marginTop: 10,
+  },
+  clipshow: {
+    width: 250,
+    paddingBottom: 10,
+    height: 260,
 
-name_1:{
-    color:'black',
-    fontSize:14,
-    fontWeight:'bold'
-},
-time:{
-    color:'black'
-},
-savebtn:{
-    width:100,
-    height:40,
-    backgroundColor:'#5ba1f4',
-    borderRadius:75,
-    marginTop:10,
-    marginLeft:50
-},
-savetxt:{
-    textAlign:'center',
-    color:'white',
-    fontWeight:'bold',
-    marginTop:7
-},
-clipview:{
-    width:350,
-    marginTop:5,
-    borderWidth:2,
-    height:215,
-    alignSelf:"center",
-    borderRadius:20,
-    borderColor:'#5ba1f4',
-    shadowOpacity:0.5,
-    shadowRadius: 1,
-    elevation: 1,
-    shadowColor:'#5ba1f4'
-},
-ClipTitle:{
-    width:305,
-    color:'black',
-    borderBottomWidth:2,
-    borderBottomColor:'#b2b3b3',
-},
-clipflatlist:{
-    height: 195 ,
-    marginTop:10,
-    borderBottomWidth:0.5,
-    borderTopWidth:0.5,
-    borderBottomColor:'#CECECE',
-    borderTopColor:'#CECECE'
-}
+    backgroundColor: '#CECECE',
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    marginLeft: 10,
+    marginVertical: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
+  },
+  cmntRespectuful: {
+    color: '#0A0A0A',
+    fontSize: 15,
+    marginTop: 15,
+    marginLeft: 25,
+  },
+  comments: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  countComment: {
+    marginLeft: 10,
+    marginTop: 5,
+    fontSize: 14,
+    color: '#0A0A0A',
+  },
+  clipView: {
+    alignItems: 'center',
+    marginLeft: 5,
+    marginTop: 15,
+    width: 400,
+    borderTopWidth: 0.5,
+  },
+  rateingtxt: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
 });
