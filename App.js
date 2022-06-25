@@ -14,6 +14,7 @@ import Splash from './secreens/Splash/splash';
 import Play from './secreens/play video/play';
 import Search from './secreens/search/search';
 import SPlashTime from './secreens/Splash Screen';
+import CompoundClip from './secreens/comundclip';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ const App = () => {
         <Stack.Screen name="admin" component={Admin} />
         <Stack.Screen name="upload" component={upload} />
         <Stack.Screen name="play" component={Play} />
+        <Stack.Screen name="CompoundClip" component={CompoundClip} />
       </Stack.Navigator>
     </NavigationContainer>
   );

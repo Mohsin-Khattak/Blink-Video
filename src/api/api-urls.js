@@ -1,5 +1,5 @@
 export const urls = {
-  base_url: 'http://192.168.100.42/BlinkVideoApi/api/',
+  base_url: 'http://192.168.0.106/BlinkVideoApi/api/',
   auth: {
     signin: 'BlinkVideo/Login',
     signup: 'BlinkVideo/AddNew',

@@ -22,9 +22,10 @@ import {urls} from '../../src/api/api-urls';
 import Ranking from '../../src/components/ranking';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getUserData} from '../../src/services/get-user_data';
+import CompoundClip from '../comundclip';
 const Play = ({navigation, route}) => {
   const [item, setItem] = React.useState(route?.params?.item);
-  console.log('item -----', item);
+
   const [title, setTitle] = useState();
   const [category, setCategory] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
@@ -41,7 +42,8 @@ const Play = ({navigation, route}) => {
   const [comment, setComment] = useState([]);
   const [data, setData] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
-
+  const [compundClips, setCompoundClips] = useState([]);
+  const [compoundIndex, setCompoundIndex] = useState(0);
   const SaveClip = async () => {
     try {
       const res = await axios.post(`${urls.base_url}BlinkVideo/AddClip`, {
@@ -50,8 +52,8 @@ const Play = ({navigation, route}) => {
         V_StartTime: values[0],
         V_EndTime: values[1],
         // Ranking: 0,
-        Video_Id: item.v_id,
-        V_Url: item.V_Url,
+        Video_Id: item?.v_id,
+        V_Url: item?.V_Url,
         Catgory: category,
       });
       alert('Added Sucessfully');
@@ -65,7 +67,7 @@ const Play = ({navigation, route}) => {
         return;
       }
       const res = await axios.post(
-        `${urls.base_url}BlinkVideo/likeVideo?v_id=${item.v_id}&user_id=${userData?.P_id}`,
+        `${urls.base_url}BlinkVideo/likeVideo?v_id=${item?.v_id}&user_id=${userData?.P_id}`,
       );
       setItem(res?.data);
       getLike();
@@ -78,7 +80,7 @@ const Play = ({navigation, route}) => {
         return;
       }
       const res = await axios.get(
-        `${urls.base_url}BlinkVideo/GetVideoLike?v_id=${item.v_id}&user_id=${userData?.P_id}`,
+        `${urls.base_url}BlinkVideo/GetVideoLike?v_id=${item?.v_id}&user_id=${userData?.P_id}`,
       );
       setIsLiked(res?.data);
     } catch (error) {}
@@ -90,9 +92,21 @@ const Play = ({navigation, route}) => {
         return;
       }
       const res = await axios.get(
-        `${urls.base_url}BlinkVideo/GetClips?v_id=${item.v_id}&user_id=${userData?.P_id}`,
+        `${urls.base_url}BlinkVideo/GetClips?v_id=${item?.v_id}&user_id=${userData?.P_id}`,
       );
       setData(res.data);
+    } catch (error) {
+      console.log('error:', error);
+    }
+  };
+  const fetchCompoundClip = async item => {
+    try {
+      const res = await axios.get(
+        `${urls.base_url}BlinkVideo/GetCompoundClips?v_id=${item?.v_id}`,
+      );
+
+      console.log('war gya', res?.data);
+      setCompoundClips(res?.data);
     } catch (error) {
       console.log('error:', error);
     }
@@ -106,7 +120,7 @@ const Play = ({navigation, route}) => {
           `${urls.base_url}BlinkVideo/AddVideoComment`,
           {
             Comment: commentText,
-            v_id: item.v_id,
+            v_id: item?.v_id,
           },
         );
         await getComments();
@@ -118,12 +132,13 @@ const Play = ({navigation, route}) => {
   };
   const getComments = async () => {
     try {
-      let url = `${urls.base_url}BlinkVideo/ViewVideoComment?v_id=${item.v_id}`;
+      let url = `${urls.base_url}BlinkVideo/ViewVideoComment?v_id=${item?.v_id}`;
       let res = await axios.get(url);
 
       setComment(res?.data);
     } catch (error) {}
   };
+
   const OnClipSave = () => {
     if (!title?.trim()) {
       alert('Please enter title');
@@ -138,19 +153,20 @@ const Play = ({navigation, route}) => {
       <View style={styles.clipshow}>
         <TouchableOpacity
           onPress={() => {
-            ref?.current?.seekTo(item.V_StartTime),
-              setEndTime(item.V_EndTime),
+            fetchCompoundClip(item);
+            ref?.current?.seekTo(item?.V_StartTime),
+              setEndTime(item?.V_EndTime),
               setIndex(index);
           }}>
           <Image
             style={{width: 250, height: 140}}
-            source={{uri: `https://img.youtube.com/vi/${item.V_Url}/0.jpg`}}
+            source={{uri: `https://img.youtube.com/vi/${item?.V_Url}/0.jpg`}}
           />
           <View style={{height: 50, width: 250}}>
             <Text style={styles.clipkeyword}>
-              {item.V_Title}
-              {item.V_Keywords.split(',').join(' | ')}
-              {item.Catgory}
+              {item?.V_Title}
+              {item?.V_Keywords?.split(',')?.join(' | ')}
+              {item?.Catgory}
             </Text>
           </View>
         </TouchableOpacity>
@@ -168,7 +184,7 @@ const Play = ({navigation, route}) => {
                 let userData = await AsyncStorage.getItem('user');
                 if (userData) {
                   userData = JSON.parse(userData);
-                  let url = `${urls.base_url}BlinkVideo/RankVideo?clip_id=${item.v_id}&user_id=${userData?.P_id}&rank=${rank}`;
+                  let url = `${urls.base_url}BlinkVideo/RankVideo?clip_id=${item?.v_id}&user_id=${userData?.P_id}&rank=${rank}`;
                   let res = await axios.get(url);
                   console.log('res of rank  =  ', res?.data);
                   // copy[index] = res?.data;
@@ -187,7 +203,7 @@ const Play = ({navigation, route}) => {
   let likeby = [];
   const LikeVideo = async item => {
     if (val) {
-      let vl = val.toString().split(item.v_id);
+      let vl = val.toString().split(item?.v_id);
       vl = vl.filter(e => {
         return item != e;
       });
@@ -197,10 +213,11 @@ const Play = ({navigation, route}) => {
   const ref = React.useRef();
   React.useEffect(() => {
     getLike();
+    return () => {};
   }, []);
   useEffect(() => {
     const interval = setInterval(async () => {
-      const elapsed_sec = await ref.current.getCurrentTime(); // this is a promise. dont forget to await
+      const elapsed_sec = await ref?.current?.getCurrentTime(); // this is a promise. dont forget to await
       // calculations
       const elapsed_ms = Math.floor(elapsed_sec * 1000);
       const min = Math.floor(elapsed_ms / 60000);
@@ -212,22 +229,24 @@ const Play = ({navigation, route}) => {
     };
   }, [index]);
   useEffect(() => {
-    if (item.V_EndTime) {
-      ref?.current?.seekTo(item.V_StartTime);
-      setEndTime(item.V_EndTime);
+    if (item?.V_EndTime) {
+      ref?.current?.seekTo(item?.V_StartTime);
+      setEndTime(item?.V_EndTime);
     }
     getComments();
     fetchClip();
+    return () => {};
   }, []);
 
   useEffect(() => {
     (async () => {
-      if (item.V_EndTime != null) {
-        await ref.current.getDuration();
+      if (item?.V_EndTime != null) {
+        await ref?.current?.getDuration();
         ref?.current?.seekTo(item?.V_StartTime);
         setEndTime(item?.V_EndTime);
       }
     })();
+    // return () => {};
   }, [item]);
 
   function fmtMSS(s) {
@@ -238,37 +257,50 @@ const Play = ({navigation, route}) => {
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <View>
         <View style={styles.video}>
-          {item.V_EndTime ? (
+          {/* {item?.V_EndTime ? ( */}
+          <YoutubePlayer
+            ref={ref}
+            videoId={item?.V_Url}
+            onChangeState={async str => {
+              if (
+                str == 'paused' &&
+                compundClips?.length > 0 &&
+                compoundIndex < compundClips?.length - 1
+              ) {
+                ref?.current?.seekTo(
+                  compundClips[compoundIndex]?.start_time || 0,
+                );
+                setEndTime(compundClips[compoundIndex]?.end_time || 0);
+
+                setCompoundIndex(compoundIndex + 1);
+              }
+              const range = await ref?.current?.getDuration();
+
+              setMaxRange(range);
+            }}
+            height={232}
+            play={curTime >= endTime ? false : true}
+          />
+          {/* ) : (
             <YoutubePlayer
               ref={ref}
-              videoId={item.V_Url}
-              onChangeState={async str => {
-                const range = await ref.current.getDuration();
-                setMaxRange(range);
-              }}
-              height={232}
-              play={curTime >= endTime ? false : true}
-            />
-          ) : (
-            <YoutubePlayer
-              ref={ref}
-              videoId={item.V_Url}
+              videoId={item?.V_Url}
               parseDuration={event => {}}
               onChangeState={async str => {
-                const range = await ref.current.getDuration();
+                const range = await ref?.current?.getDuration();
                 // console.log('lol', range);
                 setMaxRange(range);
               }}
               height={232}
               play={curTime >= endTime ? false : true}
             />
-          )}
+          )} */}
         </View>
         <View style={styles.Description}>
           <View style={{width: 308, height: 57, marginLeft: 12}}>
             <Text style={styles.videotitle}>
-              {item.V_Title}
-              {item.V_Keywords.split(',').join(' | ')}
+              {item?.V_Title}
+              {item?.V_Keywords.split(',').join(' | ')}
             </Text>
           </View>
           <View style={styles.iconsview}>
@@ -283,7 +315,7 @@ const Play = ({navigation, route}) => {
                 size={25}
                 color={'#0A0A0A'}
               />
-              <Text style={styles.txtlike}> {item.Likes}</Text>
+              <Text style={styles.txtlike}> {item?.Likes}</Text>
             </TouchableOpacity>
             <View style={styles.icon_style}>
               <Feather
@@ -302,7 +334,7 @@ const Play = ({navigation, route}) => {
                 size={25}
                 color={'#0A0A0A'}
               />
-              <Text style={styles.txtlike}>{item.Views + 1}</Text>
+              <Text style={styles.txtlike}>{item?.Views + 1}</Text>
             </View>
             <TouchableOpacity
               style={styles.icon_style}
@@ -314,6 +346,21 @@ const Play = ({navigation, route}) => {
                 color={'#0A0A0A'}
               />
               <Text style={styles.txtlike}>{saveClip ? 'Cancel' : 'Clip'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('CompoundClip', {
+                  item: route?.params?.item,
+                  maxRang: maxRang,
+                })
+              }>
+              <FontAwesome
+                style={styles.Entypo}
+                name="clipboard"
+                size={25}
+                color={'#0A0A0A'}
+              />
+              <Text style={styles.txtlike}>Compound</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -380,7 +427,7 @@ const Play = ({navigation, route}) => {
                     </Text>
                   </View>
                   <Text style={{color: 'black', marginLeft: 80}}>
-                    {item.comment}
+                    {item?.comment}
                   </Text>
                 </View>
               )}

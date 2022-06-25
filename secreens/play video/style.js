@@ -23,8 +23,7 @@ export const styles = StyleSheet.create({
   },
   iconsview: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 22,
+    marginRight: 80,
     marginTop: 10,
   },
   name_1: {
@@ -36,7 +35,7 @@ export const styles = StyleSheet.create({
     color: 'black',
   },
   savebtn: {
-    width: 100,
+    width: 130,
     height: 40,
     backgroundColor: '#5ba1f4',
     borderRadius: 75,
