@@ -12,18 +12,18 @@ export const styles = StyleSheet.create({
   },
   flatlistView: {
     width: '100%',
-    height: 300,
-
+    height: 400,
+    backgroundColor: '#F1F1F1',
     marginTop: 30,
   },
   innerFlatlist: {
     width: 370,
-    height: 100,
-    backgroundColor: 'red',
+    height: 50,
+    backgroundColor: '#5ba1f4',
     alignSelf: 'center',
+
     borderRadius: 20,
     marginBottom: 10,
-    shadowColor: '#000',
   },
   clipView: {
     width: '100%',
@@ -54,5 +54,17 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     marginTop: 7,
+  },
+  titleTxt: {
+    color: 'black',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  btnview: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginRight: 30,
+    marginBottom: 20,
   },
 });

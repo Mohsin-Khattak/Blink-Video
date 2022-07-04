@@ -12,12 +12,10 @@ select * from Video
 select * from Clip
 delete from UserLogIn 
  select * from Comment
- select * from Rankingx
-select * from Clip
+ select * from Ranking
+
+  
 select * from AddUser
+
 select * from views where v_id=1 and user_id=1
-
-select * from Video.Title
-
-select V_Url,V_Title from Video Inner join Comment  On Video.v_id=Comment.v_id
-select * from 
+select * from UserLogIn

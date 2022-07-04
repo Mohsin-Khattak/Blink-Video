@@ -47,6 +47,9 @@ const Viewvideo = ({navigation}) => {
     {
       title: 'Qwali',
     },
+    {
+      title: 'Education',
+    },
   ]);
   const [search, setSearch] = useState([]);
   useEffect(() => {
@@ -113,7 +116,7 @@ const Viewvideo = ({navigation}) => {
   const renderSearch = (item, index) => {
     return (
       <View
-        // onPress={() => onchangeCategory(item, index)}
+        onPress={() => onchangeCategory(item, index)}
         style={styles.searchitem}>
         <View
           style={{
@@ -122,7 +125,12 @@ const Viewvideo = ({navigation}) => {
             paddingRight: 20,
           }}>
           <TouchableOpacity>
-            <Text onPress={() => setSearchTerm(item)} style={styles.searchtxt}>
+            <Text
+              onPress={() => {
+                setSearchTerm(item);
+                setSearchModal(false);
+              }}
+              style={styles.searchtxt}>
               {item}
             </Text>
           </TouchableOpacity>
@@ -170,7 +178,7 @@ const Viewvideo = ({navigation}) => {
             />
           </View>
           <View style={styles.time}>
-            <Text style={styles.time1}>Views : {item.Views + 1} </Text>
+            <Text style={styles.time1}>Views : {item.Views} </Text>
           </View>
         </View>
       </View>
@@ -188,8 +196,9 @@ const Viewvideo = ({navigation}) => {
       setVideoByCategory([...data]);
     } else {
       let filter = videos.filter(e => {
-        return e?.Category === item?.title;
+        return e?.Category == item?.title;
       });
+
       setVideoByCategory(filter);
     }
     // setData(filter)
@@ -201,7 +210,7 @@ const Viewvideo = ({navigation}) => {
       if (userData) {
         userData = JSON.parse(userData);
         let url = `${urls.base_url}${urls.video.getVideo}?&user_id=${userData?.P_id}`;
-        if (searchTerm.trim().length > 0) {
+        if (searchTerm?.trim()?.length > 0) {
           url = `${urls.base_url}${urls.video.search}?searchterm=${searchTerm}`;
         }
         const res = await axios.get(url);

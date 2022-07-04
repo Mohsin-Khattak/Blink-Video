@@ -24,11 +24,11 @@ const App = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="SPlashTime" component={SPlashTime} />
         <Stack.Screen name="tab" component={Tab} />
+        <Stack.Screen name="view" component={Viewvideo} />
         <Stack.Screen name="Search" component={Search} />
         <Stack.Screen name="splash" component={Splash} />
         <Stack.Screen name="login" component={LogIn} />
         <Stack.Screen name="signup" component={SignUp} />
-        <Stack.Screen name="view" component={Viewvideo} />
         <Stack.Screen name="admin" component={Admin} />
         <Stack.Screen name="upload" component={upload} />
         <Stack.Screen name="play" component={Play} />

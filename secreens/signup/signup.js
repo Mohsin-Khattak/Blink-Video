@@ -50,13 +50,14 @@ const SignUp = ({navigation}) => {
   return (
     <View style={{flex: 1, backgroundColor: '#ffffff'}}>
       <ScrollView contentContainerStyle={{paddingBottom: 10}}>
-        <AntDesign
-          name="arrowleft"
-          color={'black'}
-          size={30}
-          onPress={() => navigation.navigate('loginback')}
-          style={styles.arrow}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate('login')}>
+          <AntDesign
+            name="arrowleft"
+            color={'black'}
+            size={30}
+            style={styles.arrow}
+          />
+        </TouchableOpacity>
         <Image
           style={styles.appicon}
           source={require('../../src/assets/images/logo.png')}

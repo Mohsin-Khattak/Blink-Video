@@ -16,7 +16,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LogIn = ({navigation}) => {
-  const [name, setName] = useState('');
+  // const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [data, setData] = React.useState([]);
@@ -25,7 +26,7 @@ const LogIn = ({navigation}) => {
   const signedIn = async () => {
     try {
       const res = await axios.get(
-        `${urls.base_url}${urls.auth.signin}?name=${name}&password=${password}`,
+        `${urls.base_url}${urls.auth.signin}?email=${email}&password=${password}`,
       );
 
       console.log('res', res?.data);
@@ -38,9 +39,9 @@ const LogIn = ({navigation}) => {
   };
 
   const OnSignIn = async () => {
-    if (!name?.trim()) alert('please enter name');
+    if (!email?.trim()) alert('please enter email');
     else if (!password?.trim()) alert('please enter password');
-    else if (password?.length < 3) alert('please enter 6 digit password');
+    // else if (password?.length < 3) alert('please enter 6 digit password');
     else {
       await signedIn();
     }
@@ -64,12 +65,12 @@ const LogIn = ({navigation}) => {
           style={{...styles.email, flexDirection: 'row', alignItems: 'center'}}>
           <Fontisto name="email" size={20} color={'black'} />
           <TextInput
-            value={name}
+            value={email}
             style={styles.useremail}
             marginLeft={20}
             placeholderTextColor={'gray'}
-            placeholder="User Name"
-            onChangeText={name => setName(name)}
+            placeholder="User Email"
+            onChangeText={email => setEmail(email)}
           />
         </View>
 

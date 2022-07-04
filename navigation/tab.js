@@ -10,7 +10,9 @@ import Search from '../secreens/search/search';
 const Tab = createBottomTabNavigator();
 function TabNavigation() {
   return (
-    <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false}}>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{headerShown: false, tabBarShowLabel: false}}>
       <Tab.Screen
         name="Home"
         component={view}
@@ -28,6 +30,7 @@ function TabNavigation() {
         name="upload"
         component={upload}
         options={{
+          unmountOnBlur: true,
           tabBarIcon: (focused, color, size) => (
             <AntDesign
               name="pluscircleo"

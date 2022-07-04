@@ -191,4 +191,8 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 10,
   },
+  clipFoter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });

@@ -14,8 +14,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {useEffect, useState} from 'react/cjs/react.development';
 import {styles} from './style';
 import {urls} from '../../src/api/api-urls';
@@ -55,10 +55,21 @@ const Play = ({navigation, route}) => {
         Video_Id: item?.v_id,
         V_Url: item?.V_Url,
         Catgory: category,
+        user_id: item?.user_id,
       });
       alert('Added Sucessfully');
       fetchClip();
     } catch (error) {}
+  };
+  const deleteVideo = async item => {
+    try {
+      await axios.delete(
+        `${urls.base_url}BlinkVideo/DeleteClip?v_id=${item.v_id}`,
+      );
+      await fetchClip();
+    } catch (error) {
+      console.log('error', error);
+    }
   };
   const likeVideo = async () => {
     try {
@@ -144,7 +155,7 @@ const Play = ({navigation, route}) => {
       alert('Please enter title');
     } else if (!keyWord?.trim()) {
       alert('Please enter keyword');
-    } else if (!category.trim()) {
+    } else if (!category?.trim()) {
       alert('Please enter Category');
     } else SaveClip();
   };
@@ -170,32 +181,44 @@ const Play = ({navigation, route}) => {
             </Text>
           </View>
         </TouchableOpacity>
-
-        <Text style={styles.rateingtxt}>Rate: {item?.Ranking?.toFixed(1)}</Text>
-        <View style={styles.rankingclip}>
-          <Ranking
-            rate={item?.stars || 0}
-            onChange={async rank => {
-              try {
-                let copy = [...data];
-                copy[index].stars = rank;
-                setData(copy);
-
-                let userData = await AsyncStorage.getItem('user');
-                if (userData) {
-                  userData = JSON.parse(userData);
-                  let url = `${urls.base_url}BlinkVideo/RankVideo?clip_id=${item?.v_id}&user_id=${userData?.P_id}&rank=${rank}`;
-                  let res = await axios.get(url);
-                  console.log('res of rank  =  ', res?.data);
-                  // copy[index] = res?.data;
-                  // setData(copy);
-                  fetchClip();
-                }
-              } catch (error) {
-                console.log('error in rank ::', error);
-              }
-            }}
-          />
+        <View style={styles.clipFoter}>
+          <View>
+            <Text style={styles.rateingtxt}>
+              Rate: {item?.Ranking?.toFixed(1)}
+            </Text>
+            <View style={styles.rankingclip}>
+              <Ranking
+                rate={item?.stars || 0}
+                onChange={async rank => {
+                  try {
+                    let copy = [...data];
+                    copy[index].stars = rank;
+                    setData(copy);
+                    let userData = await AsyncStorage.getItem('user');
+                    if (userData) {
+                      userData = JSON.parse(userData);
+                      let url = `${urls.base_url}BlinkVideo/RankVideo?clip_id=${item?.v_id}&user_id=${userData?.P_id}&rank=${rank}`;
+                      let res = await axios.get(url);
+                      console.log('res of rank  =  ', res?.data);
+                      // copy[index] = res?.data;
+                      // setData(copy);
+                      fetchClip();
+                    }
+                  } catch (error) {
+                    console.log('error in rank ::', error);
+                  }
+                }}
+              />
+            </View>
+          </View>
+          <TouchableOpacity onPress={() => deleteVideo(item)}>
+            <Entypo
+              style={styles.Entypo}
+              name="dots-three-vertical"
+              size={25}
+              color={'#0A0A0A'}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -257,7 +280,6 @@ const Play = ({navigation, route}) => {
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <View>
         <View style={styles.video}>
-          {/* {item?.V_EndTime ? ( */}
           <YoutubePlayer
             ref={ref}
             videoId={item?.V_Url}
@@ -281,20 +303,6 @@ const Play = ({navigation, route}) => {
             height={232}
             play={curTime >= endTime ? false : true}
           />
-          {/* ) : (
-            <YoutubePlayer
-              ref={ref}
-              videoId={item?.V_Url}
-              parseDuration={event => {}}
-              onChangeState={async str => {
-                const range = await ref?.current?.getDuration();
-                // console.log('lol', range);
-                setMaxRange(range);
-              }}
-              height={232}
-              play={curTime >= endTime ? false : true}
-            />
-          )} */}
         </View>
         <View style={styles.Description}>
           <View style={{width: 308, height: 57, marginLeft: 12}}>
@@ -334,7 +342,7 @@ const Play = ({navigation, route}) => {
                 size={25}
                 color={'#0A0A0A'}
               />
-              <Text style={styles.txtlike}>{item?.Views + 1}</Text>
+              <Text style={styles.txtlike}>{item?.Views}</Text>
             </View>
             <TouchableOpacity
               style={styles.icon_style}
