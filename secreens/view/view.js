@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
 import axios from 'axios';
 import {styles} from './style';
 import {urls} from '../../src/api/api-urls';
@@ -17,6 +18,7 @@ import ReactNativeModal from 'react-native-modal';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
+import {getUserData} from '../../src/services/get-user_data';
 const Viewvideo = ({navigation}) => {
   const ref = React.useRef();
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -25,6 +27,7 @@ const Viewvideo = ({navigation}) => {
   const [videoByCategory, setVideoByCategory] = React.useState(null);
   const [flag, setflag] = useState(0);
   const isFocus = useIsFocused();
+  const [userInfo, setuserInfo] = useState('');
   const [category, setCategory] = useState([
     {
       title: 'All',
@@ -148,39 +151,86 @@ const Viewvideo = ({navigation}) => {
   };
   const renderItem = (item, index) => {
     return (
-      <View style={{backgroundColor: 'white'}}>
-        <TouchableOpacity onPress={() => mapToPlay(item)} style={styles.video}>
-          <Image
-            style={{height: 215, width: '100%'}}
-            source={{uri: `https://img.youtube.com/vi/${item.V_Url}/0.jpg`}}
-          />
-        </TouchableOpacity>
-        <View style={{height: 88}}>
-          <View>
-            {/* <Image style={styles.userimage} source={require('../../src/assets/images/mohsin.jpg')} /> */}
-            <Image
-              style={styles.userimage}
-              source={{uri: `https://img.youtube.com/vi/${item.V_Url}/0.jpg`}}
-            />
-          </View>
-          <View style={styles.title}>
-            <View style={{width: 310, height: 35}}>
-              <Text ellipsizeMode="tail" style={{...styles.name_1}}>
-                {item.V_Title}
-                {item.V_Keywords.split(',').join(' | ')}
-              </Text>
+      <View>
+        {item.hide_video == 0 ? (
+          <View style={{backgroundColor: 'white'}}>
+            <TouchableOpacity
+              onPress={() => mapToPlay(item)}
+              style={styles.video}>
+              <Image
+                style={{height: 215, width: '100%'}}
+                source={{uri: `https://img.youtube.com/vi/${item.V_Url}/0.jpg`}}
+              />
+            </TouchableOpacity>
+            <View style={{height: 88}}>
+              <View>
+                {/* <Image style={styles.userimage} source={require('../../src/assets/images/mohsin.jpg')} /> */}
+                <Image
+                  style={styles.userimage}
+                  source={{
+                    uri: `https://img.youtube.com/vi/${item.V_Url}/0.jpg`,
+                  }}
+                />
+              </View>
+              <View style={styles.title}>
+                <View style={{width: 310, height: 35}}>
+                  <Text ellipsizeMode="tail" style={{...styles.name_1}}>
+                    {item.V_Title}
+                    {item.V_Keywords.split(',').join(' | ')}
+                  </Text>
+                </View>
+                <Feather
+                  style={styles.Entypo}
+                  name="eye"
+                  size={20}
+                  color={'black'}
+                />
+              </View>
+              <View style={styles.time}>
+                <Text style={styles.time1}>Views : {item.Views} </Text>
+              </View>
             </View>
-            <Entypo
-              style={styles.Entypo}
-              name="dots-three-vertical"
-              size={20}
-              color={'black'}
-            />
           </View>
-          <View style={styles.time}>
-            <Text style={styles.time1}>Views : {item.Views} </Text>
+        ) : userInfo?.U_Role == 'admin' ? (
+          <View style={{backgroundColor: 'white'}}>
+            <TouchableOpacity
+              onPress={() => mapToPlay(item)}
+              style={styles.video}>
+              <Image
+                style={{height: 215, width: '100%'}}
+                source={{uri: `https://img.youtube.com/vi/${item.V_Url}/0.jpg`}}
+              />
+            </TouchableOpacity>
+            <View style={{height: 88}}>
+              <View>
+                {/* <Image style={styles.userimage} source={require('../../src/assets/images/mohsin.jpg')} /> */}
+                <Image
+                  style={styles.userimage}
+                  source={{
+                    uri: `https://img.youtube.com/vi/${item.V_Url}/0.jpg`,
+                  }}
+                />
+              </View>
+              <View style={styles.title}>
+                <View style={{width: 310, height: 35}}>
+                  <Text ellipsizeMode="tail" style={{...styles.name_1}}>
+                    {item.V_Title}
+                    {item.V_Keywords.split(',').join(' | ')}
+                  </Text>
+                </View>
+                <Feather
+                  style={styles.Entypo}
+                  name="eye"
+                  size={20}
+                  color={'black'}
+                />
+              </View>
+              <View style={styles.time}>
+                <Text style={styles.time1}>Views : {item.Views} </Text>
+              </View>
+            </View>
           </View>
-        </View>
+        ) : null}
       </View>
     );
   };
@@ -204,9 +254,10 @@ const Viewvideo = ({navigation}) => {
     // setData(filter)
   };
   const getData = async () => {
+    let user = await getUserData();
+    setuserInfo(user);
     try {
       let userData = await AsyncStorage.getItem('user');
-
       if (userData) {
         userData = JSON.parse(userData);
         let url = `${urls.base_url}${urls.video.getVideo}?&user_id=${userData?.P_id}`;
@@ -214,16 +265,29 @@ const Viewvideo = ({navigation}) => {
           url = `${urls.base_url}${urls.video.search}?searchterm=${searchTerm}`;
         }
         const res = await axios.get(url);
-        setData(res?.data);
+
+        // console.log('result data', res?.data);
+        let sortdata = [];
+        sortdata = res?.data;
+        sortdata = sortdata.sort((a, b) => {
+          return b.Views - a.Views;
+        });
+        let newlist = [];
+        sortdata.map(item => {
+          let obj = newlist.find(x => x.v_id === item.v_id);
+          if (!obj) {
+            newlist.push(item);
+          }
+        });
+        setData(newlist);
       }
     } catch (error) {
       console.log('error::   ', error);
     }
   };
-
   React.useEffect(() => {
     if (isFocus) {
-      setVideoByCategory();
+      setVideoByCategory('');
       getData();
     }
   }, [searchTerm, isFocus]);

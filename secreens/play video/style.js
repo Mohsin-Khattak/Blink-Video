@@ -23,7 +23,9 @@ export const styles = StyleSheet.create({
   },
   iconsview: {
     flexDirection: 'row',
-    marginRight: 80,
+    width: '100%',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
     marginTop: 10,
   },
   name_1: {
@@ -194,5 +196,50 @@ export const styles = StyleSheet.create({
   clipFoter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  innerModalView: {
+    alignSelf: 'center',
+    position: 'absolute',
+    minHeight: 120,
+    width: 350,
+    bottom: 0,
+    backgroundColor: 'white',
+    // marginHorizontal: 20,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  deletecontent: {
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  deletbtn: {
+    width: 100,
+    height: 41,
+    backgroundColor: '#5ba1f4',
+    borderRadius: 51,
+  },
+  txtDelete: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+    marginTop: 5,
+  },
+  deleteview: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 30,
+    marginTop: 20,
   },
 });

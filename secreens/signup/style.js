@@ -55,4 +55,28 @@ export const styles = StyleSheet.create({
     top: 20,
     left: 20,
   },
+  roleview: {
+    marginLeft: 20,
+    marginTop: 35,
+    width: '100%',
+    flexDirection: 'row',
+  },
+  roletxt: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  radioButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 30,
+    marginTop: 10,
+  },
+  radioButtonText: {
+    color: 'black',
+    fontSize: 14,
+    fontWeight: '400',
+    paddingLeft: 5,
+  },
 });

@@ -2,10 +2,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from './style';
+import {CommonActions} from '@react-navigation/native';
 const Splash = ({navigation}) => {
   const clearAsyncStorage = async () => {
     await AsyncStorage.clear().then(() => {
-      navigation.navigate('login');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'login'}],
+      });
     });
   };
   //   const [email, setEmail] = useState('mohsinkhattak053@gmail.com');

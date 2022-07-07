@@ -13,37 +13,45 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {useEffect, useState} from 'react/cjs/react.development';
 import {styles} from './style';
 import {urls} from '../../src/api/api-urls';
+import Modal from 'react-native-modal';
 import Ranking from '../../src/components/ranking';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getUserData} from '../../src/services/get-user_data';
 import CompoundClip from '../comundclip';
 const Play = ({navigation, route}) => {
   const [item, setItem] = React.useState(route?.params?.item);
-
   const [title, setTitle] = useState();
   const [category, setCategory] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [keyWord, setKeyWord] = useState();
   const [saveClip, setSaveClip] = useState(false);
   const [endTime, setEndTime] = useState();
   const [curTime, setCurTime] = useState();
   const [maxRang, setMaxRange] = useState(100);
   const [values, setVlues] = useState([0, 30]);
-  // const [right, setRight] = useState(30)
   const [index, setIndex] = useState(0);
   const [commentText, setCommentText] = useState('');
-  // const [isPlay, setIsPlay] = useState(true)
   const [comment, setComment] = useState([]);
   const [data, setData] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const [compundClips, setCompoundClips] = useState([]);
   const [compoundIndex, setCompoundIndex] = useState(0);
+  const [userInfo, setUserInfo] = useState();
+
+  const CurrentUser = async () => {
+    let info = await getUserData();
+    console.log(info);
+    setUserInfo(info);
+  };
+
   const SaveClip = async () => {
     try {
       const res = await axios.post(`${urls.base_url}BlinkVideo/AddClip`, {
@@ -116,7 +124,7 @@ const Play = ({navigation, route}) => {
         `${urls.base_url}BlinkVideo/GetCompoundClips?v_id=${item?.v_id}`,
       );
 
-      console.log('war gya', res?.data);
+      // console.log('war gya', res?.data);
       setCompoundClips(res?.data);
     } catch (error) {
       console.log('error:', error);
@@ -149,7 +157,6 @@ const Play = ({navigation, route}) => {
       setComment(res?.data);
     } catch (error) {}
   };
-
   const OnClipSave = () => {
     if (!title?.trim()) {
       alert('Please enter title');
@@ -211,7 +218,7 @@ const Play = ({navigation, route}) => {
               />
             </View>
           </View>
-          <TouchableOpacity onPress={() => deleteVideo(item)}>
+          <TouchableOpacity onPress={() => setVisible(true)}>
             <Entypo
               style={styles.Entypo}
               name="dots-three-vertical"
@@ -220,6 +227,30 @@ const Play = ({navigation, route}) => {
             />
           </TouchableOpacity>
         </View>
+        <Modal
+          backdropOpacity={0.1}
+          onBackButtonPress={() => setVisible(false)}
+          visible={visible}>
+          <View style={styles.innerModalView}>
+            <Text style={styles.deletecontent}>
+              Do you want to Delete a Clip
+            </Text>
+            <View style={styles.deleteview}>
+              <TouchableOpacity
+                style={styles.deletbtn}
+                onPress={() => {
+                  deleteVideo(item), setVisible(false);
+                }}>
+                <Text style={styles.txtDelete}>Delete</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.deletbtn}
+                onPress={() => setVisible(false)}>
+                <Text style={styles.txtDelete}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   };
@@ -252,6 +283,7 @@ const Play = ({navigation, route}) => {
     };
   }, [index]);
   useEffect(() => {
+    CurrentUser();
     if (item?.V_EndTime) {
       ref?.current?.seekTo(item?.V_StartTime);
       setEndTime(item?.V_EndTime);
@@ -325,7 +357,7 @@ const Play = ({navigation, route}) => {
               />
               <Text style={styles.txtlike}> {item?.Likes}</Text>
             </TouchableOpacity>
-            <View style={styles.icon_style}>
+            <View>
               <Feather
                 style={styles.Entypo}
                 onPress={() => setModalVisible(!isModalVisible)}
@@ -335,7 +367,7 @@ const Play = ({navigation, route}) => {
               />
               <Text style={styles.txtlike}>{comment?.length}</Text>
             </View>
-            <View style={styles.icon_style}>
+            <View>
               <SimpleLineIcons
                 style={styles.Entypo}
                 name="eyeglass"
@@ -344,32 +376,40 @@ const Play = ({navigation, route}) => {
               />
               <Text style={styles.txtlike}>{item?.Views}</Text>
             </View>
-            <TouchableOpacity
-              style={styles.icon_style}
-              onPress={() => setSaveClip(!saveClip)}>
-              <FontAwesome
-                style={styles.Entypo}
-                name="scissors"
-                size={25}
-                color={'#0A0A0A'}
-              />
-              <Text style={styles.txtlike}>{saveClip ? 'Cancel' : 'Clip'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('CompoundClip', {
-                  item: route?.params?.item,
-                  maxRang: maxRang,
-                })
-              }>
-              <FontAwesome
-                style={styles.Entypo}
-                name="clipboard"
-                size={25}
-                color={'#0A0A0A'}
-              />
-              <Text style={styles.txtlike}>Compound</Text>
-            </TouchableOpacity>
+            <View>
+              {userInfo?.U_Role == 'admin' ? (
+                <TouchableOpacity onPress={() => setSaveClip(!saveClip)}>
+                  <FontAwesome
+                    style={styles.Entypo}
+                    name="scissors"
+                    size={25}
+                    color={'#0A0A0A'}
+                  />
+                  <Text style={styles.txtlike}>
+                    {saveClip ? 'Cancel' : 'Clip'}
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
+            </View>
+            <View>
+              {userInfo?.U_Role == 'admin' ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('CompoundClip', {
+                      item: route?.params?.item,
+                      maxRang: maxRang,
+                    })
+                  }>
+                  <FontAwesome
+                    style={styles.Entypo}
+                    name="clipboard"
+                    size={25}
+                    color={'#0A0A0A'}
+                  />
+                  <Text style={styles.txtlike}>Compound</Text>
+                </TouchableOpacity>
+              ) : null}
+            </View>
           </View>
         </View>
       </View>

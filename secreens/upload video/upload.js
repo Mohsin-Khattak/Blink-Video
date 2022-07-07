@@ -58,6 +58,7 @@ const Upload = ({navigation}) => {
         Likes: 0,
         Views: 0,
         user_id: userData?.P_id,
+        hide_video: 0,
       });
       console.log('res', res?.data);
       setData(res?.data);

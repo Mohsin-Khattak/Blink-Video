@@ -5,7 +5,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import view from '../secreens/view/view';
 import upload from '../secreens/upload video/upload';
 import splash from '../secreens/Splash/splash';
-import Search from '../secreens/search/search';
 
 const Tab = createBottomTabNavigator();
 function TabNavigation() {
